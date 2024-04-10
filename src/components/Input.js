@@ -42,7 +42,7 @@ export default function Input() {
   const inputuDeğiştir = (evt) => {
     // When the input changes, its whole value can be found inside the event object.
     // Log out the synthetic event object 'evt' and see for yourself.
-    const { value } = evt.target;
+    const { value } = evt.target; //Destructure etmek const value = evt.target.value
     setInputDeğeri(value); /* ADIM 4 */
   };
   const reset = () => {
@@ -62,7 +62,14 @@ export default function Input() {
         {inputDeğeri.toUpperCase() /* ADIM 3 */}
       </div>
       <div>
-        <input id="input" type="text" onChange={inputuDeğiştir} />{" "}
+        <input
+          id="input"
+          type="text"
+          onChange={inputuDeğiştir}
+          value={
+            inputDeğeri
+          } /* input alanini resetledigimde value da resetlenmeli */
+        />{" "}
         {/* ADIM 6 */}
         <button id="resetInput" onClick={reset}>
           Reset

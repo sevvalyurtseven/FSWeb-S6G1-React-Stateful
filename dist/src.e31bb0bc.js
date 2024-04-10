@@ -29050,7 +29050,7 @@ function Input() {
   var inputuDeğiştir = function inputuDeğiştir(evt) {
     // When the input changes, its whole value can be found inside the event object.
     // Log out the synthetic event object 'evt' and see for yourself.
-    var value = evt.target.value;
+    var value = evt.target.value; //Destructure etmek const value = evt.target.value
     setInputDeğeri(value); /* ADIM 4 */
   };
 
@@ -29072,7 +29072,8 @@ function Input() {
   }, inputDeğeri.toUpperCase() /* ADIM 3 */), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", {
     id: "input",
     type: "text",
-    onChange: inputuDeğiştir
+    onChange: inputuDeğiştir,
+    value: inputDeğeri /* input alanini resetledigimde value da resetlenmeli */
   }), " ", /*#__PURE__*/_react.default.createElement("button", {
     id: "resetInput",
     onClick: reset
@@ -29222,8 +29223,17 @@ function Dondurucu() {
     setDondurucuAcik = _useState2[1];
   /* ADIM 1 */
 
+  /* ADIM 4 */
   var toggleDondurucu = function toggleDondurucu() {
-    setDondurucuAcik(!dondurucuAcik); /* ADIM 4 */
+    setDondurucuAcik(!dondurucuAcik);
+
+    /* 
+    if(dondurucuAcik === true){
+    setDondurucuAcik(false) 
+    }else{
+    setDondurucuAcik(true) 
+    }  
+    */
   };
 
   return /*#__PURE__*/_react.default.createElement("div", {
@@ -29267,7 +29277,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; } /*
                                                                       Aşaıdaki yorumları takip edin.
                                                                       */
 //Bu değişkeni YALNIZCA bir durum dilimini yüklemek için kullanın!
-var KareIdListesi = ['sqA', 'sqB', 'sqC', 'sqD'];
+var KareIdListesi = ["sqA", "sqB", "sqC", "sqD"];
 function Kareler() {
   // State hookunu 2 defa kullanın: 'kareler' ve
   // 'aktifKare' olmak üzere. Birisi kare idlerini _dizi_ olarak tutacak, diğeri ise aktif olan
@@ -29278,7 +29288,7 @@ function Kareler() {
     _useState2 = _slicedToArray(_useState, 2),
     kareler = _useState2[0],
     setKareler = _useState2[1];
-  var _useState3 = (0, _react.useState)(null),
+  var _useState3 = (0, _react.useState)(""),
     _useState4 = _slicedToArray(_useState3, 2),
     aktifKare = _useState4[0],
     setAktifKare = _useState4[1];
@@ -29287,13 +29297,17 @@ function Kareler() {
     // Eğer argüman olarak verilen id aktif kare state'indeki id ile eşleşirse, class adı 'active' olan bir string döndürecek
     // diğer durumlar için boş döndürecek.
     // Etkisini görmek için kareye sağ tıklayın ve "öğeyi inceleyin".
-    return id === aktifKare ? "active" : "";
+    return aktifKare === id ? "active" : "";
   };
   var AktifEt = function AktifEt(id) {
     // Bu bir _satır içinden çağırılmış_ click handler yardımcısıdır.
     // id bağımsız değişkenini, stateteki aktif id olacak şekilde ayarlayın
     // eğer zaten aktifse, o zaman önce state i resetlemeliyiz.
-    setAktifKare(id === aktifKare ? null : id);
+    if (aktifKare === id) {
+      setAktifKare("");
+    } else {
+      setAktifKare(id);
+    }
   };
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "widget-squares container"
@@ -29348,23 +29362,23 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; } /*
 // JSX'te şu anda bu kuralı çiğneyen bir şey var...
 // Export syntaxı, test kitaplığının diziyi içe aktarabilmesi için gereklidir.
 var enIyilerListesi = [{
-  id: '1',
-  isim: 'Ada Lovelace'
+  id: "1",
+  isim: "Ada Lovelace"
 }, {
-  id: '2',
-  isim: 'Grace Hopper'
+  id: "2",
+  isim: "Grace Hopper"
 }, {
-  id: '3',
-  isim: 'Evelyn Boyd Granville'
+  id: "3",
+  isim: "Evelyn Boyd Granville"
 }, {
-  id: '4',
-  isim: 'Mary Kenneth Keller'
+  id: "4",
+  isim: "Mary Kenneth Keller"
 }, {
-  id: '5',
-  isim: 'Frances Allen'
+  id: "5",
+  isim: "Frances Allen"
 }, {
-  id: '6',
-  isim: 'Carol Shaw'
+  id: "6",
+  isim: "Carol Shaw"
 }];
 exports.enIyilerListesi = enIyilerListesi;
 function Programcilar() {
@@ -29383,19 +29397,18 @@ function Programcilar() {
     // Bunu sona bırakın!
     // Bu bir event handler değil, yardımcıdır. Kullanımını JSX'te gözlemleyin.
     // Öne çıkan geliştiricinin _isim_ adını döndürmek için her iki state dilimini kullanacak.
-    // Closureların güzelliği, argümanlar yoluyla bilgi enjekte etmeye gerek kalmadan programın 
+    // Closureların güzelliği, argümanlar yoluyla bilgi enjekte etmeye gerek kalmadan programın
     // bu bölgesinden her iki state dilimini de "görebilmemiz"dir.
-    var programci = "";
-    programcilar.forEach(function (item) {
-      if (programciId === item.id) {
-        programci = item.isim;
-      }
+
+    var secili = programcilar.find(function (dev) {
+      return dev.id === programciId;
     });
-    return programci;
+    //console.log(secili);
+    return secili.isim;
   };
   var stil = {
-    fontSize: '1.5em',
-    marginTop: '0.5em',
+    fontSize: "1.5em",
+    marginTop: "0.5em",
     color: programciId === null ? "royalblue" : "gold" // 🤔 kutlarken renk gold'a dönecek
   };
 
@@ -29408,7 +29421,7 @@ function Programcilar() {
   // Şöyle diyebiliriz: "aa bu çalışıyor!" Ama programcilar bir state diliminden gelmiyorsa,
   // asla yeni programci ekleyemeyiz, programcilari düzenleyemeyiz ya da silemeyiz. Düzeltin!
   " */
-  enIyilerListesi.map(function (dev) {
+  programcilar.map(function (dev) {
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "programmer",
       key: dev.id
@@ -29424,7 +29437,7 @@ function Programcilar() {
   // Üçlüler, bir şeyin "gerçekliğine" bağlı olarak "bir şeyi veya diğerini" ifade etmek için harikadır..
   // Sözde-kod: öne çıkan true ise metin 1'i oluşturun, aksi takdirde metin 2'yi oluşturun..
   // Sabit kodlanmış false'u doğru değişkenle değiştirin.
-  programciId !== null ? "\uD83C\uDF89 Hadi ".concat(oneCikaninIsmi(), "'\u0131 kutlayal\u0131m! \uD83E\uDD73") : 'Harika bir programcı seçin'));
+  programciId !== null ? "\uD83C\uDF89 Hadi ".concat(oneCikaninIsmi(), "'\u0131 kutlayal\u0131m! \uD83E\uDD73") : "Harika bir programcı seçin"));
 }
 },{"react":"../node_modules/react/index.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -29466,7 +29479,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50602" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60061" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
